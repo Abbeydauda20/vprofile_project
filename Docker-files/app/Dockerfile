@@ -9,8 +9,12 @@ RUN cd vprofile_project && git checkout container && mvn install
 
 
 FROM tomcat:9-jre11
+LABEL "Project"="vprofile_project"
+LABEL "Author"="Abbey"
 RUN rm -rf /user/loca;/tomcat/webapps/*
 COPY --from=BUILD_IMAGE vprofile_project/target/vprofile-v2.war /user/local/tomcat/webapps/RC
 
 EXPOSE 8080
 CMD ["catalin.sh", "run"]
+WORKDIR /usr/local/tomcat/
+VOLUME /usr/local/tomcat/webapps
